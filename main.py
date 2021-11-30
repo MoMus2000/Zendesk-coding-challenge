@@ -6,6 +6,8 @@ import math
 import numpy as np
 import os
 from rich.table import Column, Table
+import getpass
+
 
 
 console = Console()
@@ -51,10 +53,10 @@ def user_interface_all_tickets(res, last_page):
     if load == "Y" or load == "y":
         load_page(res)
 
-    while load != "N" or "n":
+    while True:
         load = console.input("[bold cyan]Next page? (Y/N) [/bold cyan]")
         current_page += 1
-        if current_page >= last_page:
+        if current_page >= last_page or load == "N" or load=="n":
             console.print("[bold cyan]End of pages ...[/bold cyan]")
             break
         else:
@@ -89,7 +91,7 @@ def load_page(res, current_page = 0):
 
 if __name__ == "__main__":
     u = input("Enter username ... ")
-    p = input("Enter password ... ")
+    p = getpass.getpass('Enter password ...')
     login(u, p)
     result, res, last_page = fetch_tickets(u, p)
     while True:
